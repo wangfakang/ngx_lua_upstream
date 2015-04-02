@@ -1,0 +1,32 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DDEBUG	ngx_http_lua_upstream_module.c	8;"	d	file:
+_DDEBUG_H_INCLUDED_	ddebug.h	8;"	d
+dd	ddebug.h	/^static void dd(const char *fmt, ...) {$/;"	f
+dd	ddebug.h	19;"	d
+dd	ddebug.h	39;"	d
+dd_check_read_event_handler	ddebug.h	54;"	d
+dd_check_read_event_handler	ddebug.h	74;"	d
+dd_check_write_event_handler	ddebug.h	63;"	d
+dd_check_write_event_handler	ddebug.h	75;"	d
+ngx_http_lua_get_peer	ngx_http_lua_upstream_module.c	/^ngx_http_lua_get_peer(lua_State *L, ngx_http_upstream_rr_peer_t *peer,$/;"	f	file:
+ngx_http_lua_upstream_add_peer	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_add_peer(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_add_server	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_add_server(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_create_module	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_create_module(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_ctx	ngx_http_lua_upstream_module.c	/^static ngx_http_module_t ngx_http_lua_upstream_ctx = {$/;"	v	file:
+ngx_http_lua_upstream_find_upstream	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_find_upstream(lua_State *L, ngx_str_t *host)$/;"	f	file:
+ngx_http_lua_upstream_get_backup_peers	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_get_backup_peers(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_get_primary_peers	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_get_primary_peers(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_get_servers	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_get_servers(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_get_upstream_main_conf	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_get_upstream_main_conf(lua_State *L)$/;"	f	file:
+ngx_http_lua_upstream_get_upstreams	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_get_upstreams(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_init	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_init(ngx_conf_t *cf)$/;"	f	file:
+ngx_http_lua_upstream_lookup_peer	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_lookup_peer(lua_State *L)$/;"	f	file:
+ngx_http_lua_upstream_module	ngx_http_lua_upstream_module.c	/^ngx_module_t ngx_http_lua_upstream_module = {$/;"	v
+ngx_http_lua_upstream_module	ngx_http_lua_upstream_module.c	/^ngx_module_t ngx_http_lua_upstream_module;$/;"	v
+ngx_http_lua_upstream_say_hello	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_say_hello(lua_State * L)$/;"	f	file:
+ngx_http_lua_upstream_set_peer_down	ngx_http_lua_upstream_module.c	/^ngx_http_lua_upstream_set_peer_down(lua_State * L)$/;"	f	file:
