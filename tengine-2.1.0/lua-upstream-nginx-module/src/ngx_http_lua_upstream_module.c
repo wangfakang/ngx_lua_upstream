@@ -271,8 +271,8 @@ ngx_http_lua_upstream_check_peers(lua_State * L,ngx_url_t u,ngx_http_upstream_se
     ngx_http_upstream_server_t *server; 
 
     if (lua_gettop(L) != 1) {
-    	lua_createtable(L, 0, 21);
-    	lua_pushstring(L, "no argument expected\n");
+        lua_pushnil(L);
+        lua_pushliteral(L, "no argument expected\n");
         return NULL;
     }
 
@@ -289,6 +289,7 @@ ngx_http_lua_upstream_check_peers(lua_State * L,ngx_url_t u,ngx_http_upstream_se
     }
     
     if (i >= umcf->upstreams.nelts ) {
+          lua_pushnil(L);
 	  lua_pushliteral(L,"not find this peer\n");
           return NULL;
     }
@@ -336,7 +337,10 @@ ngx_http_lua_upstream_add_peer(lua_State * L)
         // four param is :  "ip:port" 
         // for lua code , you must pass this one param, is none ,you should 
         // consider pass default value.
-        return luaL_error(L, "exactly one argument expected");
+    	//lua_pushstring(L, "exactly one argument expected\n");
+        lua_pushnil(L);
+        lua_pushliteral(L, "exactly one argument expected\n");
+        return 2;
     }
 
     r = ngx_http_lua_get_request(L);
@@ -354,32 +358,30 @@ ngx_http_lua_upstream_add_peer(lua_State * L)
 #if (NGX_DEBUG)
     ngx_log_error(NGX_LOG_ALERT, r->connection->log, 0, "%s %s params: %s\n", __FILE__,__FUNCTION__ , u.url.data );
 #endif
-    	}
-    }
 
     uscf = ngx_http_lua_upstream_check_peers(L,u,&us);
     if ( NULL == uscf || NULL == us) {
-       return 1;
+       return 2;
     }
 
     peers = uscf->peer.data;
     if ( 1 == ngx_http_lua_upstream_exist_peer(peers,u) ) {
-    	lua_createtable(L, 0, 18);
-    	lua_pushstring(L, "the peer is exist\n");
-        return 1;
+        lua_pushnil(L);
+        lua_pushliteral(L, "the peer is exist\n");
+        return 2;
     }
 
     n = peers->number -1 ;
     n += peers->next != NULL ? peers->next->number : 0;
     old_size = n*sizeof(ngx_http_upstream_rr_peer_t) 
 			+ sizeof(ngx_http_upstream_rr_peers_t)*(peers->next != NULL ? 2:1);
-    new_size = sizeof(ngx_http_upstream_rr_peer_t);
+    new_size = sizeof(ngx_http_upstream_rr_peer_t) + old_size;
     
-    peers  = ngx_prealloc(ngx_cycle->pool, uscf->peer.data, old_size, new_size + old_size);
+    peers  = ngx_prealloc(ngx_cycle->pool, uscf->peer.data, old_size, new_size );
     if (NULL == peers ) {
-    	lua_createtable(L, 0, 18);
-    	lua_pushstring(L, "peers pcalloc fail\n");
-        return 1;
+        lua_pushnil(L);
+        lua_pushliteral(L, "peers pcalloc fail\n");
+        return 2;
     }
 
 
