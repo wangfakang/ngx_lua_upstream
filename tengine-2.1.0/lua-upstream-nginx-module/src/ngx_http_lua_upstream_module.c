@@ -154,7 +154,6 @@ ngx_http_lua_upstream_compare_server(ngx_http_upstream_srv_conf_t * us , ngx_url
             return  &server[i];
         }
         
-        
     }
 
     return NULL;
@@ -172,7 +171,7 @@ ngx_http_lua_upstream_add_server(lua_State * L)
     ngx_http_request_t *r;
     ngx_int_t weight, max_fails;
     time_t fail_timeout;
-    u_char *ptmp;
+    u_char *p;
 
     if (lua_gettop(L) != 5) {
         // four param is :"upstream name", "ip:port" , "weight" , "max_fails", 
@@ -192,14 +191,14 @@ ngx_http_lua_upstream_add_server(lua_State * L)
     host.data = (u_char *) luaL_checklstring(L, 1, &host.len);
 
     ngx_memzero(&u, sizeof (ngx_url_t));
-    u.url.data = (u_char *) luaL_checklstring(L, 2, &u.url.len);
+    p = (u_char *) luaL_checklstring(L, 2, &u.url.len);
     u.default_port = 80;
 
     weight = (ngx_int_t) luaL_checkint(L, 3);
     max_fails = (ngx_int_t) luaL_checkint(L, 4);
     fail_timeout = (time_t) luaL_checklong(L, 5);
 #if (NGX_DEBUG)
-    ngx_log_error(NGX_LOG_ALERT, r->connection->log, 0, "%s %s params: %s,%s,%d,%d,%d\n", __FILE__,__FUNCTION__, host.data, u.url.data, weight, max_fails, fail_timeout);
+    ngx_log_error(NGX_LOG_ALERT, r->connection->log, 0, "%s %s params: %s,%s,%d,%d,%d\n", __FILE__,__FUNCTION__, host.data, p, weight, max_fails, fail_timeout);
 #endif
     uscf = ngx_http_lua_upstream_find_upstream(L, &host);
     if (uscf == NULL) {
@@ -210,12 +209,9 @@ ngx_http_lua_upstream_add_server(lua_State * L)
  
      
     // lua virtual machine memory is stack,so dup a memory 
-    //ngx_strdup malloc memory but not memzero  
-    //u.url.data = ngx_pstrdup(uscf->servers->pool , &u.url);
-    ptmp = ngx_pnalloc(uscf->servers->pool,u.url.len+1);
-    ngx_memcpy(ptmp,u.url.data,u.url.len);
-    ptmp[u.url.len] = '\0';
-    u.url.data = ptmp;
+    u.url.data = ngx_pcalloc(uscf->servers->pool,u.url.len+1);
+    ngx_memcpy(u.url.data ,p ,u.url.len);
+
     if ( NULL != ngx_http_lua_upstream_compare_server(uscf,u) ) {
         lua_pushnil(L);
         lua_pushliteral(L,"this server is exist\n");
@@ -537,6 +533,8 @@ ngx_http_lua_upstream_get_servers(lua_State * L)
     return 1;
 }
 
+
+
 static int
 ngx_http_lua_upstream_get_primary_peers(lua_State * L)
 {
@@ -689,6 +687,8 @@ ngx_http_lua_upstream_lookup_peer(lua_State *L)
 
     return &peers->peer[id];
 }
+
+
 
 static int
 ngx_http_lua_get_peer(lua_State *L, ngx_http_upstream_rr_peer_t *peer,
